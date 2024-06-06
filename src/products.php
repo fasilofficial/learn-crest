@@ -18,8 +18,8 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center  ">
-                        <h2>Leads</h2>
-                        <a href='./add_lead.php' type='button' class='btn btn-primary'>Add</a>
+                        <h2>Products</h2>
+                        <a href='./add_product.php' type='button' class='btn btn-primary'>Add</a>
                     </div>
                     <div class="card-body">
 
@@ -27,35 +27,29 @@
 
                         require_once(__DIR__ . '/crest.php');
 
-                        $leads = CRest::call('crm.lead.list');
+                        $products = CRest::call('crm.product.list');
 
-                        if (!empty($leads['result'])) {
+                        if (!empty($products['result'])) {
                             echo '<table class="table table-bordered table-striped">';
                             echo '<thead>';
                             echo '<tr>';
                             echo '<th>ID</th>';
-                            echo '<th>Title</th>';
                             echo '<th>Name</th>';
-                            echo '<th>Last Name</th>';
-                            echo '<th>Has Email</th>';
-                            echo '<th>Has Phone</th>';
+                            echo '<th>Price</th>';
                             echo '</tr>';
                             echo '</thead>';
                             echo '<tbody>';
 
-                            usort($leads['result'], function ($a, $b) {
+                            usort($products['result'], function ($a, $b) {
                                 return $b['ID'] - $a['ID'];
                             });
 
-                            // Loop through each lead and output data into table rows
-                            foreach ($leads['result'] as $lead) {
+
+                            foreach ($products['result'] as $product) {
                                 echo '<tr>';
-                                echo '<td>' . $lead['ID'] . '</td>';
-                                echo '<td>' . $lead['TITLE'] . '</td>';
-                                echo '<td>' . $lead['NAME'] . '</td>';
-                                echo '<td>' . $lead['LAST_NAME'] . '</td>';
-                                echo '<td>' . ($lead['HAS_EMAIL'] == "Y" ? 'True' : 'False') . '</td>';
-                                echo '<td>' . ($lead['HAS_PHONE'] == "Y" ? 'True' : 'False') . '</td>';
+                                echo '<td>' . $product['ID'] . '</td>';
+                                echo '<td>' . $product['NAME'] . '</td>';
+                                echo '<td>' . $product['PRICE'] . '</td>';
                                 echo '</tr>';
                             }
 
@@ -63,7 +57,7 @@
                             echo '</table>';
                             echo "<a href='./index.php' type='button' class='btn btn-secondary'>Back</a>";
                         } else {
-                            echo '<p>No leads found.</p>';
+                            echo '<p>No product found.</p>';
                         }
                         ?>
 
